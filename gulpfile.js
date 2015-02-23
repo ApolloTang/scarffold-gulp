@@ -20,7 +20,13 @@ console.log ('argv: ', argv);
 
 // var env = process.env.NODE_ENV || 'development';
 var env = argv.env || 'development';
+var port = argv.p || '9999';
+
+// automatically set livereload port for additional instance
+var livereload_port = (port !== '9999') ? (+port + 40000) + "" : '35729';
+
 console.log('env: ', env);
+console.log('livereload_port: ', livereload_port);
 
 var doneInit = false;
 
@@ -154,7 +160,9 @@ connect.server({
         root: outputDir,
         // open: { browser: 'Google Chrome'}
         // Option open does not work in gulp-connect v 2.*. Please read "readme" https://github.com/AveVlad/gulp-connect}
-        livereload: true
+        port: port,
+        // livereload: true,
+        livereload: {port : livereload_port}
     });
 });
 
